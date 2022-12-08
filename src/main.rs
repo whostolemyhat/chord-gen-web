@@ -1,27 +1,50 @@
 use log::info;
 // use clap::{arg, Command};
 use actix_web::{
-    dev::ResourcePath, error, get, middleware::Logger, post, web, App, HttpResponse, HttpServer,
-    Responder, Result,
+    error, get, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer, Responder,
+    Result,
 };
 use chord_gen::Chord;
+use serde::Deserialize;
 
 #[get("/ping")]
 async fn ping() -> impl Responder {
     HttpResponse::Ok()
 }
 
-#[get("/")]
-async fn home() -> impl Responder {
+#[derive(Deserialize, Debug)]
+struct ChordForm {
+    title: String,
+    fingers: String,
+    frets: String,
+}
+
+#[post("/")]
+async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
+    info!("{:?}", payload);
+    let frets: Vec<i32> = payload
+        .frets
+        .split(',')
+        .map(|letter| letter.parse::<i32>().unwrap_or(-1))
+        .collect();
+
+    let fingers: Vec<&str> = payload.fingers.split(',').collect();
+
     let settings = Chord {
-        frets: vec![5, 7, 7, 6, 5, 5],
-        fingers: vec!["1", "3", "4", "2", "1", "1"],
-        size: 1,
-        title: "A barre",
+        frets,
+        fingers,
+        title: &payload.title,
     };
     let output_dir = "./output";
-    chord_gen::render(settings, output_dir);
-    HttpResponse::Ok().body("Ok!")
+    match chord_gen::render(settings, output_dir) {
+        Ok(_) => Ok(HttpResponse::Ok().body("Ok!")),
+        Err(e) => Err(error::ErrorInternalServerError(e)),
+    }
+}
+
+#[get("/")]
+async fn home() -> impl Responder {
+    HttpResponse::Ok().body("Hi!")
 }
 
 // TODO logging/tracing
@@ -35,6 +58,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .service(ping)
             .service(home)
+            .service(handle_form)
     })
     .bind(("localhost", 8080))?
     .run()

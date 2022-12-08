@@ -10,3 +10,4 @@ chord-gen = { path = "../chord-gen" }
 actix-web = "4.2.1"
 env_logger = "0.10.0"
 log = "0.4.16"
+serde = { version = "1.0.149", features = ["derive"] }
