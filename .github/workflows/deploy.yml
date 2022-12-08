@@ -27,4 +27,4 @@ jobs:
         # SSH_HOST is the IP of the digital ocean dropley
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Copy files
-        run: rsync -avz ./build/ ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.DEST_FOLDER}}
+        run: rsync -avz ./target/release/chord-web ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.DEST_FOLDER}}
