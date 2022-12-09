@@ -1,11 +1,11 @@
-use log::info;
-// use clap::{arg, Command};
 use actix_web::{
     error, get, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer, Responder,
     Result,
 };
 use chord_gen::Chord;
+use log::info;
 use serde::Deserialize;
+use std::env;
 
 #[get("/ping")]
 async fn ping() -> impl Responder {
@@ -21,6 +21,7 @@ struct ChordForm {
 
 #[post("/")]
 async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
+    let output_dir = env::var("OUTPUT_PATH").unwrap_or("./output".to_string());
     info!("{:?}", payload);
     let frets: Vec<i32> = payload
         .frets
@@ -35,8 +36,8 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
         fingers,
         title: &payload.title,
     };
-    let output_dir = "./output";
-    match chord_gen::render(settings, output_dir) {
+    // let output_dir = "./output";
+    match chord_gen::render(settings, &output_dir) {
         Ok(_) => Ok(HttpResponse::Ok().body("Ok!")),
         Err(e) => Err(error::ErrorInternalServerError(e)),
     }
@@ -50,6 +51,8 @@ async fn home() -> impl Responder {
 // TODO logging/tracing
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let port = env::var("PORT").unwrap_or("4041".to_string());
+
     std::env::set_var("RUST_LOG", "info");
     env_logger::init();
     info!("Startng server");
@@ -60,7 +63,7 @@ async fn main() -> std::io::Result<()> {
             .service(home)
             .service(handle_form)
     })
-    .bind(("localhost", 8080))?
+    .bind(format!("127.0.0.1:{:}", port))?
     .run()
     .await
 }
