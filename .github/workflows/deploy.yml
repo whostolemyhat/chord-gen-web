@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   deploy:
-    runs-on: ubuntu-16
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install deps
@@ -13,12 +13,27 @@ jobs:
           sudo apt-get update
           sudo apt-get install libasound2-dev libudev-dev libcairo2-dev -y
 
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          target: x86_64-unknown-linux-musl
+
       - name: Build
         uses: actions-rs/cargo@v1
         with:
-          use-cross: true
+          # use-cross:
           command: build
-          args: --release --target x86_64-unknown-linux-musl # do box is 64-bit ubuntu
+          args: --release --target x86_64-unknown-linux-musl
+
+      # - name: Build
+      #   uses: actions-rs/cargo@v1
+      #   with:
+      #     use-cross: true
+      #     command: build
+      #     args: --release --target x86_64-unknown-linux-musl # do box is 64-bit ubuntu
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
