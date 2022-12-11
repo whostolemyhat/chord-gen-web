@@ -24,7 +24,7 @@ jobs:
       - name: Build
         uses: actions-rs/cargo@v1
         with:
-          # use-cross:
+          use-cross: true
           command: build
           args: --release --target x86_64-unknown-linux-musl
 
