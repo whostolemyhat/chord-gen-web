@@ -1,0 +1,98 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Chord diagram generator</title>
+  <meta name="description" content="Create guitar chord diagrams">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <main class="main">
+  <h2>Oh hi, heard you like chords</h2>
+  <form method="post" target="_top" action="/" id="generate">
+    <label class="label form__row" for="title">Chord name <input type="text" name="title" id="title" /></label>
+
+    <fieldset class="form__row">
+      <legend>Frets</legend>
+      <label class="label" for="frets-low-e">E
+        <input type="number" step="1" min="0" max="24" name="frets-low-e" id="frets-low-e" value="" />
+      </label>
+
+      <label class="label" for="frets-a">A
+        <input type="number" step="1" min="0" max="24" name="frets-a" id="frets-a" value="" />
+      </label>
+
+      <label class="label" for="frets-d">D
+        <input type="number" step="1" min="0" max="24" name="frets-d" id="frets-d" value="" />
+      </label>
+
+      <label class="label" for="frets-g">G
+        <input type="number" step="1" min="0" max="24" name="frets-g" id="frets-g" value="" />
+      </label>
+
+      <label class="label" for="frets-b">B
+        <input type="number" step="1" min="0" max="24" name="frets-b" id="frets-b" value="" />
+      </label>
+
+      <label class="label" for="frets-high-e">e
+        <input type="number" step="1" min="0" max="24" name="frets-high-e" id="frets-high-e" value="" />
+      </label>
+    </fieldset>
+
+    <fieldset class="form__row">
+        <legend>Fingers</legend>
+        <label class="label" for="fingers-low-e">E
+          <input type="number" step="1" min="0" max="4" name="fingers-low-e" id="fingers-low-e" value="" />
+        </label>
+        <label class="label" for="fingers-a">A
+          <input type="number" step="1" min="0" max="4" name="fingers-a" id="fingers-a" value="" />
+        </label>
+        <label class="label" for="fingers-d">D
+          <input type="number" step="1" min="0" max="4" name="fingers-d" id="fingers-d" value="" />
+        </label>
+        <label class="label" for="fingers-g">G
+          <input type="number" step="1" min="0" max="4" name="fingers-g" id="fingers-g" value="" />
+        </label>
+        <label class="label" for="fingers-b">B
+          <input type="number" step="1" min="0" max="4" name="fingers-b" id="fingers-b" value="" />
+        </label>
+        <label class="label" for="fingers-high-e">e
+          <input type="number" step="1" min="0" max="4" name="fingers-high-e" id="fingers-high-e" value="" />
+        </label>
+      </fieldset>
+
+    <button type="submit">Ok go</button>
+  </form>
+  </main>
+
+
+  <!-- <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+  <script src="js/plugins.js"></script> -->
+  <script src="js/main.js"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <!-- <script>
+    // window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    // ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+  </script> -->
+  <!-- <script src="https://www.google-analytics.com/analytics.js" async></script> -->
+
+</body>
+
+</html>

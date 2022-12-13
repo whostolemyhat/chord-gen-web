@@ -1,6 +1,7 @@
+use actix_cors::Cors;
 use actix_web::{
-    error, get, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer, Responder,
-    Result,
+    error, get, http, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer,
+    Responder, Result,
 };
 use chord_gen::Chord;
 use log::info;
@@ -56,9 +57,18 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "info");
     env_logger::init();
     info!("Startng server");
+
     HttpServer::new(|| {
+        let cors = Cors::default()
+            .allowed_origin("http://localhost:1234")
+            .allowed_origin("https://chordgenerator.xyz")
+            .allowed_methods(vec!["GET", "POST", "HEAD"])
+            //   .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+            .allowed_header(http::header::CONTENT_TYPE)
+            .max_age(3600);
         App::new()
             .wrap(Logger::default())
+            .wrap(cors)
             .service(ping)
             .service(home)
             .service(handle_form)
