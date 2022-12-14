@@ -50,7 +50,7 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
     match chord_gen::render(settings, &format!(".{}", output_dir)) {
         Ok(_) => {
             let response = ImageCreated {
-                path: &payload.title,
+                path: payload.title,
             };
             Ok(HttpResponse::Ok().json(response))
         }
