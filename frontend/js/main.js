@@ -37,7 +37,14 @@ function handleSubmit(e) {
     body: transformed,
   })
     .then((response) => {
-      console.log(response);
+      response.json().then(({ path }) => {
+        console.log(path);
+        const chord = document.querySelector("#chord");
+        chord.innerHTML = "";
+        let img = document.createElement("img");
+        img.src = `http://localhost:4041${path}.png`;
+        chord.appendChild(img);
+      });
     })
     .catch((e) => console.error("oh no", e));
 }

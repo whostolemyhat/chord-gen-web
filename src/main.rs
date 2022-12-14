@@ -1,11 +1,12 @@
 use actix_cors::Cors;
+use actix_files;
 use actix_web::{
     error, get, http, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer,
     Responder, Result,
 };
 use chord_gen::Chord;
 use log::info;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::env;
 
 #[get("/ping")]
@@ -20,9 +21,14 @@ struct ChordForm {
     frets: String,
 }
 
+#[derive(Serialize)]
+struct ImageCreated {
+    path: String,
+}
+
 #[post("/")]
 async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
-    let output_dir = env::var("OUTPUT_PATH").unwrap_or("./output".to_string());
+    let output_dir = env::var("OUTPUT_PATH").unwrap_or_else(|_| "/static/output".to_string());
     info!("{:?}", payload);
     let frets: Vec<i32> = payload
         .frets
@@ -37,22 +43,28 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
         fingers,
         title: &payload.title,
     };
-    // let output_dir = "./output";
-    match chord_gen::render(settings, &output_dir) {
-        Ok(_) => Ok(HttpResponse::Ok().body("Ok!")),
+
+    // TODO change file name
+    // TODO use path
+    let output_path = format!("{}/{}", output_dir, &payload.title);
+    match chord_gen::render(settings, &format!(".{}", output_dir)) {
+        Ok(_) => {
+            let response = ImageCreated { path: output_path };
+            Ok(HttpResponse::Ok().json(response))
+        }
         Err(e) => Err(error::ErrorInternalServerError(e)),
     }
 }
 
 #[get("/")]
 async fn home() -> impl Responder {
-    HttpResponse::Ok().body("Hi!")
+    HttpResponse::Ok()
 }
 
 // TODO logging/tracing
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let port = env::var("PORT").unwrap_or("4041".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "4041".to_string());
 
     std::env::set_var("RUST_LOG", "info");
     env_logger::init();
@@ -72,6 +84,7 @@ async fn main() -> std::io::Result<()> {
             .service(ping)
             .service(home)
             .service(handle_form)
+            .service(actix_files::Files::new("/static", "./static"))
     })
     .bind(format!("127.0.0.1:{:}", port))?
     .run()
