@@ -46,10 +46,12 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
 
     // TODO change file name
     // TODO use path
-    let output_path = format!("{}/{}", output_dir, &payload.title);
+    // let output_path = format!("{}/{}", output_dir, &payload.title);
     match chord_gen::render(settings, &format!(".{}", output_dir)) {
         Ok(_) => {
-            let response = ImageCreated { path: output_path };
+            let response = ImageCreated {
+                path: &payload.title,
+            };
             Ok(HttpResponse::Ok().json(response))
         }
         Err(e) => Err(error::ErrorInternalServerError(e)),
