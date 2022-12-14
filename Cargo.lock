@@ -386,7 +386,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 [[package]]
 name = "chord-gen"
 version = "0.1.0"
-source = "git+https://github.com/whostolemyhat/chord-gen?tag=v1.0.0#c89aeb963271b6affab44c5b19b906a3e3be3704"
+source = "git+https://github.com/whostolemyhat/chord-gen?tag=v1.1.0#debcd918172886246a63ac4e3389d383a2c8f336"
 dependencies = [
  "cairo-rs",
  "clap",

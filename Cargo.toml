@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 # chord-gen = { path = "../chord-gen" }
-chord-gen = { git = "https://github.com/whostolemyhat/chord-gen", tag = "v1.0.0"}
+chord-gen = { git = "https://github.com/whostolemyhat/chord-gen", tag = "v1.1.0"}
 actix-web = "4.2.1"
 env_logger = "0.10.0"
 log = "0.4.16"

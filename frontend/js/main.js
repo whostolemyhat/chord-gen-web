@@ -42,7 +42,7 @@ function handleSubmit(e) {
         const chord = document.querySelector("#chord");
         chord.innerHTML = "";
         let img = document.createElement("img");
-        img.src = `http://localhost:4041${path}.png`;
+        img.src = `${path}.png`;
         chord.appendChild(img);
       });
     })
