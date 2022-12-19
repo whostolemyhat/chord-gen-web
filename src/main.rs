@@ -4,7 +4,7 @@ use actix_web::{
     error, get, http, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer,
     Responder, Result,
 };
-use chord_gen::Chord;
+use chord_gen::{get_filename, Chord};
 use log::info;
 use serde::{Deserialize, Serialize};
 use std::env;
@@ -47,10 +47,12 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
     // TODO change file name
     // TODO use path
     // let output_path = format!("{}/{}", output_dir, &payload.title);
+    let filename = get_filename(&settings);
+    println!("file {}", filename);
     match chord_gen::render(settings, &format!(".{}", output_dir)) {
         Ok(_) => {
             let response = ImageCreated {
-                path: payload.title.clone(),
+                path: filename.to_string(),
             };
             Ok(HttpResponse::Ok().json(response))
         }
@@ -86,7 +88,7 @@ async fn main() -> std::io::Result<()> {
             .service(ping)
             .service(home)
             .service(handle_form)
-            .service(actix_files::Files::new("/static", "./static"))
+            .service(actix_files::Files::new("/images", "./static/output"))
     })
     .bind(format!("127.0.0.1:{:}", port))?
     .run()
