@@ -262,17 +262,26 @@ textarea {
   }
 }
 
-.main {
+.container {
   max-width: 600px;
-  margin: auto;
-  padding: 1rem;
-  width: 100%;
+    margin: auto;
+    padding: 1rem;
+    width: 100%;
 }
 
 .form__row {
   margin: 1rem 0;
 }
 
-.label {
+.label,
+legend {
   font-weight: bold;
+}
+
+.label__title input {
+  display: block;
+}
+
+.footer {
+  font-size: 0.8rem;
 }

@@ -20,13 +20,31 @@
   <link rel="stylesheet" href="css/main.css">
 
   <meta name="theme-color" content="#fafafa">
+
+  <!-- Matomo -->
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "//ma.chordgenerator.xyz/";
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <!-- End Matomo Code -->
+
 </head>
 
 <body>
-  <main class="main">
-  <h2>Oh hi, heard you like chords</h2>
+  <header class="container"><h1>Chord Generator</h1></header>
+
+  <main class="main container">
   <form method="post" target="_top" action="/" id="generate">
-    <label class="label form__row" for="title">Chord name <input type="text" name="title" id="title" maxlength="10" /></label>
+    <label class="label form__row label__title" for="title">Chord name <input type="text" name="title" id="title" maxlength="10" /></label>
 
     <fieldset class="form__row">
       <legend>Frets</legend>
@@ -77,23 +95,26 @@
         </label>
       </fieldset>
 
-    <button type="submit">Ok go</button>
+    <button type="submit">Create</button>
   </form>
 
   <section id="chord"></section>
+
+  <section class="about">
+    <p>Create a guitar chord diagram by using the form. Use the frets to indicate which fret should be played per string, and fingers to add suggested fingering.</p>
+    <p>Leave fret blank to show the string should not be played, and leave a finger field blank to show the string should be skipped (marked by 'x').</p>
+    <p>Use '0' in the finger and fret fields to indicate an open string.</p>
+  </section>
   </main>
+  <footer class="footer container">
+    <h3 class="footer__header">Made by <a href="https://jamesbaum.co.uk" title="James' site">James Baum</a></h3>
+    <p>This site uses Matomo for traffic analytics; no personal data is used or transferred.</p>
+  </footer>
 
 
   <!-- <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script> -->
   <script src="js/main.js"></script>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <!-- <script>
-    // window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    // ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script> -->
-  <!-- <script src="https://www.google-analytics.com/analytics.js" async></script> -->
 
 </body>
 
