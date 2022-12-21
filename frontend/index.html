@@ -36,69 +36,81 @@
     })();
   </script>
   <!-- End Matomo Code -->
-
 </head>
 
+<!-- // ♭ \u266D
+// ♯ \u266F
+// natural ♮ \u266E
+// dim o U+E870
+// aug + U+E872 + -->
+
 <body>
-  <header class="container"><h1>Chord Generator</h1></header>
+  <div class="header__stripe"></div>
+  <header class="container header"><h1>Chord Generator</h1></header>
 
   <main class="main container">
   <form method="post" target="_top" action="/" id="generate">
-    <label class="label form__row label__title" for="title">Chord name <input type="text" name="title" id="title" maxlength="10" /></label>
+    <label class="label form__row label__title" for="title">
+      Chord name
+      <input type="text" name="title" id="title" maxlength="10" class="input input__title" placeholder="D♭7" />
+    </label>
 
     <fieldset class="form__row">
       <legend>Frets</legend>
       <label class="label" for="frets-low-e">E
-        <input type="number" step="1" min="0" max="24" name="frets-low-e" id="frets-low-e" value="" />
+        <!-- pattern: x or 10-14 and 20-24 or 15-19 or 0-9 -->
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" name="frets-low-e" id="frets-low-e" value="" placeholder="x" class="input" />
       </label>
 
       <label class="label" for="frets-a">A
-        <input type="number" step="1" min="0" max="24" name="frets-a" id="frets-a" value="" />
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-a" id="frets-a" value="" class="input"  />
       </label>
 
       <label class="label" for="frets-d">D
-        <input type="number" step="1" min="0" max="24" name="frets-d" id="frets-d" value="" />
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-d" id="frets-d" value="" class="input"  />
       </label>
 
       <label class="label" for="frets-g">G
-        <input type="number" step="1" min="0" max="24" name="frets-g" id="frets-g" value="" />
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-g" id="frets-g" value="" class="input"  />
       </label>
 
       <label class="label" for="frets-b">B
-        <input type="number" step="1" min="0" max="24" name="frets-b" id="frets-b" value="" />
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-b" id="frets-b" value="" class="input"  />
       </label>
 
       <label class="label" for="frets-high-e">e
-        <input type="number" step="1" min="0" max="24" name="frets-high-e" id="frets-high-e" value="" />
+        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-high-e" id="frets-high-e" value="" class="input"  />
       </label>
+      <p class="form__caption">Add fret number 0-24 or <code>x</code> to skip.</p>
     </fieldset>
 
     <fieldset class="form__row">
         <legend>Fingers</legend>
         <label class="label" for="fingers-low-e">E
-          <input type="number" step="1" min="0" max="4" name="fingers-low-e" id="fingers-low-e" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-low-e" id="fingers-low-e" value="" class="input"  />
         </label>
         <label class="label" for="fingers-a">A
-          <input type="number" step="1" min="0" max="4" name="fingers-a" id="fingers-a" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-a" id="fingers-a" value="" class="input"  />
         </label>
         <label class="label" for="fingers-d">D
-          <input type="number" step="1" min="0" max="4" name="fingers-d" id="fingers-d" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-d" id="fingers-d" value="" class="input"  />
         </label>
         <label class="label" for="fingers-g">G
-          <input type="number" step="1" min="0" max="4" name="fingers-g" id="fingers-g" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-g" id="fingers-g" value="" class="input"  />
         </label>
         <label class="label" for="fingers-b">B
-          <input type="number" step="1" min="0" max="4" name="fingers-b" id="fingers-b" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-b" id="fingers-b" value="" class="input"  />
         </label>
         <label class="label" for="fingers-high-e">e
-          <input type="number" step="1" min="0" max="4" name="fingers-high-e" id="fingers-high-e" value="" />
+          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-high-e" id="fingers-high-e" value="" class="input"  />
         </label>
+        <p class="form__caption">Add number 0-4 or <code>x</code> to skip.</p>
       </fieldset>
 
-    <button type="submit">Create</button>
+    <button type="submit" class="button">Create</button>
   </form>
 
-  <section id="chord"></section>
+  <section id="chord" class="container"></section>
 
   <section class="about">
     <p>Create a guitar chord diagram by using the form. Use the frets to indicate which fret should be played per string, and fingers to add suggested fingering.</p>
