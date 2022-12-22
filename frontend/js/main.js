@@ -2,7 +2,6 @@ function handleSubmit(e) {
   e.preventDefault();
   // console.log(e);
   const data = new FormData(e.target);
-  console.log(Object.fromEntries(data));
   const frets = [
     data.get("frets-low-e") || -1,
     data.get("frets-a") || -1,
@@ -25,10 +24,6 @@ function handleSubmit(e) {
   transformed.append("fingers", fingers);
   transformed.append("title", data.get("title") || "");
 
-  console.log(Object.fromEntries(transformed));
-
-  // const prod = "https://chordgenerator.xyz/api/";
-  // const dev = "http://localhost:4041";
   const headers = new Headers();
   headers.append("Content-Type", "application/x-www-form-urlencoded");
   fetch(process.env.API_URL, {
@@ -38,16 +33,112 @@ function handleSubmit(e) {
   })
     .then((response) => {
       response.json().then(({ path }) => {
-        console.log(path);
-        const chord = document.querySelector("#chord");
-        chord.innerHTML = "";
-        let img = document.createElement("img");
-        img.src = `${process.env.IMAGES_URL}/${path}.png`;
-        chord.appendChild(img);
+        showChordImage(path);
       });
     })
     .catch((e) => console.error("oh no", e));
 }
 
+function showChordImage(path) {
+  const chord = document.querySelector("#chord");
+  chord.innerHTML = "";
+  let img = document.createElement("img");
+  img.src = `${process.env.IMAGES_URL}/${path}.png`;
+  chord.appendChild(img);
+}
+
+function applyPreset(preset) {
+  document.querySelector("#title").value = preset.title;
+  document.querySelector("#frets-low-e").value = preset.frets[0];
+  document.querySelector("#frets-a").value = preset.frets[1];
+  document.querySelector("#frets-d").value = preset.frets[2];
+  document.querySelector("#frets-g").value = preset.frets[3];
+  document.querySelector("#frets-b").value = preset.frets[4];
+  document.querySelector("#frets-high-e").value = preset.frets[5];
+
+  document.querySelector("#fingers-low-e").value = preset.fingers[0];
+  document.querySelector("#fingers-a").value = preset.fingers[1];
+  document.querySelector("#fingers-d").value = preset.fingers[2];
+  document.querySelector("#fingers-g").value = preset.fingers[3];
+  document.querySelector("#fingers-b").value = preset.fingers[4];
+  document.querySelector("#fingers-high-e").value = preset.fingers[5];
+
+  showChordImage(preset.image);
+}
+
+function createPresets(presets) {
+  presets.forEach((preset) => {
+    const presetsSection = document.querySelector(".presets");
+    const btn = document.createElement("button");
+    btn.classList.add("button");
+    // btn.id = preset.elementId;
+    btn.textContent = preset.title;
+    btn.addEventListener("click", () => applyPreset(preset));
+    presetsSection.appendChild(btn);
+  });
+}
+
+const presets = [
+  {
+    title: "E",
+    frets: ["0", "2", "2", "1", "0", "0"],
+    fingers: ["0", "2", "3", "1", "0", "0"],
+    image: "18436534002643003894",
+  },
+  {
+    title: "D",
+    frets: ["x", "x", "0", "2", "3", "2"],
+    fingers: ["x", "x", "0", "2", "3", "1"],
+    image: "4095730029079104823",
+  },
+  {
+    title: "A",
+    frets: ["x", "0", "2", "2", "2", "0"],
+    fingers: ["x", "0", "2", "1", "3", "0"],
+    image: "6374786531096975228",
+  },
+  {
+    title: "G",
+    frets: ["3", "2", "0", "0", "0", "3"],
+    fingers: ["2", "1", "0", "0", "0", "3"],
+    image: "8535511527932517360",
+  },
+  {
+    title: "C",
+    frets: ["x", "3", "2", "0", "1", "0"],
+    fingers: ["x", "3", "2", "0", "1", "0"],
+    image: "452844100226506193",
+  },
+  {
+    title: "Hendrix",
+    frets: ["x", "7", "6", "7", "8", "x"],
+    fingers: ["x", "2", "1", "3", "4", "x"],
+    image: "13217194300744275703",
+  },
+  {
+    title: "Bond",
+    frets: ["0", "10", "9", "8", "7", "x"],
+    fingers: ["0", "4", "3", "2", "1", "x"],
+    image: "12540277254987366366",
+  },
+  {
+    title: "C°7",
+    frets: ["x", "3", "4", "2", "3", "x"],
+    fingers: ["x", "2", "3", "1", "4", "x"],
+    image: "15615698213659243213",
+  },
+  {
+    title: "D7",
+    frets: ["10", "12", "10", "11", "10", "10"],
+    fingers: ["1", "3", "1", "2", "1", "1"],
+    image: "13518970828834701382",
+  },
+];
+
 const form = document.querySelector("#generate");
 form.addEventListener("submit", handleSubmit);
+
+createPresets(presets);
+
+const buttons = document.querySelectorAll(".presets .button");
+buttons[Math.floor(Math.random() * buttons.length)].click();

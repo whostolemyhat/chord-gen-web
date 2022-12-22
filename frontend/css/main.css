@@ -301,7 +301,6 @@ a:hover {
 }
 
 .header__stripe {
-  /* background: rgb(254, 225, 80); */
   background: #FEE150;
   display: block;
   width: 100%;
@@ -314,7 +313,6 @@ a:hover {
 }
 
 .button {
-  /* background: rgb(254, 225, 80); */
   background: #bb0083;
   border: 1px solid #99006b;
   padding: 0.75rem 1rem;
@@ -332,14 +330,26 @@ h1 {
   margin: 1.2rem 0 0.8rem;
 }
 
-
 .form__row {
   margin: 1rem 0;
+}
+
+@media (max-width: 500px) {
+  .form__wrapper .label {
+    width: 30%;
+    display: inline-block;
+  }
 }
 
 .label,
 legend {
   font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.label__title span {
+  display: inline-block;
+  margin-bottom: 0.5rem;
 }
 
 .label__title input {
@@ -353,4 +363,15 @@ legend {
 #chord {
   margin: auto;
   text-align: center;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.presets .button {
+  min-width: 100px;
+  /* margin-bottom: 0.5rem; */
 }

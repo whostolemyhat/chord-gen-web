@@ -1,133 +1,273 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chord diagram generator</title>
+    <meta name="description" content="Create guitar chord diagrams" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Chord diagram generator</title>
-  <meta name="description" content="Create guitar chord diagrams">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+    <meta name="theme-color" content="#fafafa" />
 
-  <meta name="theme-color" content="#fafafa">
+    <!-- Matomo -->
+    <script>
+      var _paq = (window._paq = window._paq || []);
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+      (function () {
+        var u = "//ma.chordgenerator.xyz/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", "1"]);
+        var d = document,
+          g = d.createElement("script"),
+          s = d.getElementsByTagName("script")[0];
+        g.async = true;
+        g.src = u + "matomo.js";
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <!-- End Matomo Code -->
+  </head>
 
-  <!-- Matomo -->
-  <script>
-    var _paq = window._paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function () {
-      var u = "//ma.chordgenerator.xyz/";
-      _paq.push(['setTrackerUrl', u + 'matomo.php']);
-      _paq.push(['setSiteId', '1']);
-      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-    })();
-  </script>
-  <!-- End Matomo Code -->
-</head>
-
-<!-- // ♭ \u266D
+  <!-- // ♭ \u266D
 // ♯ \u266F
 // natural ♮ \u266E
-// dim o U+E870
+// dim o U+E870 °U+00B0
 // aug + U+E872 + -->
 
-<body>
-  <div class="header__stripe"></div>
-  <header class="container header"><h1>Chord Generator</h1></header>
+  <body>
+    <div class="header__stripe"></div>
+    <header class="container header"><h1>Chord Generator</h1></header>
 
-  <main class="main container">
-  <form method="post" target="_top" action="/" id="generate">
-    <label class="label form__row label__title" for="title">
-      Chord name
-      <input type="text" name="title" id="title" maxlength="10" class="input input__title" placeholder="D♭7" />
-    </label>
-
-    <fieldset class="form__row">
-      <legend>Frets</legend>
-      <label class="label" for="frets-low-e">E
-        <!-- pattern: x or 10-14 and 20-24 or 15-19 or 0-9 -->
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" name="frets-low-e" id="frets-low-e" value="" placeholder="x" class="input" />
-      </label>
-
-      <label class="label" for="frets-a">A
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-a" id="frets-a" value="" class="input"  />
-      </label>
-
-      <label class="label" for="frets-d">D
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-d" id="frets-d" value="" class="input"  />
-      </label>
-
-      <label class="label" for="frets-g">G
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-g" id="frets-g" value="" class="input"  />
-      </label>
-
-      <label class="label" for="frets-b">B
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-b" id="frets-b" value="" class="input"  />
-      </label>
-
-      <label class="label" for="frets-high-e">e
-        <input type="text" pattern="x|([1-2][0-4])|([1][5-9])|[0-9]" placeholder="x" name="frets-high-e" id="frets-high-e" value="" class="input"  />
-      </label>
-      <p class="form__caption">Add fret number 0-24 or <code>x</code> to skip.</p>
-    </fieldset>
-
-    <fieldset class="form__row">
-        <legend>Fingers</legend>
-        <label class="label" for="fingers-low-e">E
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-low-e" id="fingers-low-e" value="" class="input"  />
+    <main class="main container">
+      <form method="post" target="_top" action="/" id="generate">
+        <label class="label form__row label__title" for="title">
+          <span>Chord name</span>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            maxlength="10"
+            class="input input__title"
+            placeholder="D♭7"
+          />
         </label>
-        <label class="label" for="fingers-a">A
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-a" id="fingers-a" value="" class="input"  />
-        </label>
-        <label class="label" for="fingers-d">D
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-d" id="fingers-d" value="" class="input"  />
-        </label>
-        <label class="label" for="fingers-g">G
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-g" id="fingers-g" value="" class="input"  />
-        </label>
-        <label class="label" for="fingers-b">B
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-b" id="fingers-b" value="" class="input"  />
-        </label>
-        <label class="label" for="fingers-high-e">e
-          <input type="text" pattern="x|[0-4]" placeholder="x" name="fingers-high-e" id="fingers-high-e" value="" class="input"  />
-        </label>
-        <p class="form__caption">Add number 0-4 or <code>x</code> to skip.</p>
-      </fieldset>
 
-    <button type="submit" class="button">Create</button>
-  </form>
+        <fieldset class="form__row">
+          <legend>Frets</legend>
+          <div class="form__wrapper">
+            <label class="label" for="frets-low-e"
+              >E
+              <!-- pattern: x or 10-14 and 20-24 or 15-19 or 0-9 -->
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                name="frets-low-e"
+                id="frets-low-e"
+                value=""
+                placeholder="x"
+                class="input"
+              />
+            </label>
 
-  <section id="chord" class="container"></section>
+            <label class="label" for="frets-a"
+              >A
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                placeholder="x"
+                name="frets-a"
+                id="frets-a"
+                value=""
+                class="input"
+              />
+            </label>
 
-  <section class="about">
-    <p>Create a guitar chord diagram by using the form. Use the frets to indicate which fret should be played per string, and fingers to add suggested fingering.</p>
-    <p>Leave fret blank to show the string should not be played, and leave a finger field blank to show the string should be skipped (marked by 'x').</p>
-    <p>Use '0' in the finger and fret fields to indicate an open string.</p>
-  </section>
-  </main>
-  <footer class="footer container">
-    <h3 class="footer__header">Made by <a href="https://jamesbaum.co.uk" title="James' site">James Baum</a></h3>
-    <p>This site uses Matomo for traffic analytics; no personal data is used or transferred.</p>
-  </footer>
+            <label class="label" for="frets-d"
+              >D
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                placeholder="x"
+                name="frets-d"
+                id="frets-d"
+                value=""
+                class="input"
+              />
+            </label>
 
+            <label class="label" for="frets-g"
+              >G
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                placeholder="x"
+                name="frets-g"
+                id="frets-g"
+                value=""
+                class="input"
+              />
+            </label>
 
-  <!-- <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+            <label class="label" for="frets-b"
+              >B
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                placeholder="x"
+                name="frets-b"
+                id="frets-b"
+                value=""
+                class="input"
+              />
+            </label>
+
+            <label class="label" for="frets-high-e"
+              >e
+              <input
+                type="text"
+                pattern="x|([1-2][0-4])|([1][5-9])|[0-9]"
+                placeholder="x"
+                name="frets-high-e"
+                id="frets-high-e"
+                value=""
+                class="input"
+              />
+            </label>
+          </div>
+
+          <p class="form__caption">
+            Add fret number 0-24 or <code>x</code> to skip.
+          </p>
+        </fieldset>
+
+        <fieldset class="form__row">
+          <legend>Fingers</legend>
+          <div class="form__wrapper">
+            <label class="label" for="fingers-low-e"
+              >E
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-low-e"
+                id="fingers-low-e"
+                value=""
+                class="input"
+              />
+            </label>
+            <label class="label" for="fingers-a"
+              >A
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-a"
+                id="fingers-a"
+                value=""
+                class="input"
+              />
+            </label>
+            <label class="label" for="fingers-d"
+              >D
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-d"
+                id="fingers-d"
+                value=""
+                class="input"
+              />
+            </label>
+            <label class="label" for="fingers-g"
+              >G
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-g"
+                id="fingers-g"
+                value=""
+                class="input"
+              />
+            </label>
+            <label class="label" for="fingers-b"
+              >B
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-b"
+                id="fingers-b"
+                value=""
+                class="input"
+              />
+            </label>
+            <label class="label" for="fingers-high-e"
+              >e
+              <input
+                type="text"
+                pattern="x|[0-4]"
+                placeholder="x"
+                name="fingers-high-e"
+                id="fingers-high-e"
+                value=""
+                class="input"
+              />
+            </label>
+          </div>
+          <p class="form__caption">Add number 0-4 or <code>x</code> to skip.</p>
+        </fieldset>
+
+        <button type="submit" class="button">Create</button>
+      </form>
+
+      <section id="chord" class="container"></section>
+
+      <section class="presets">
+        <!-- <button id="preset-d">D</button> -->
+      </section>
+
+      <section class="about">
+        <p>
+          Create a guitar chord diagram by using the form. Use the frets to
+          indicate which fret should be played per string, and fingers to add
+          suggested fingering.
+        </p>
+        <p>
+          Leave fret blank to show the string should not be played, and leave a
+          finger field blank to show the string should be skipped (marked by
+          'x').
+        </p>
+        <p>Use '0' in the finger and fret fields to indicate an open string.</p>
+      </section>
+    </main>
+    <footer class="footer container">
+      <h3 class="footer__header">
+        Made by
+        <a href="https://jamesbaum.co.uk" title="James' site">James Baum</a>
+      </h3>
+      <p>
+        This site uses Matomo for traffic analytics; no personal data is used or
+        transferred.
+      </p>
+    </footer>
+
+    <!-- <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script> -->
-  <script src="js/main.js"></script>
-
-</body>
-
+    <script src="js/main.js"></script>
+  </body>
 </html>
