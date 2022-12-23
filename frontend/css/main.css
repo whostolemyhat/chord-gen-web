@@ -326,6 +326,20 @@ a:hover {
   border-color: #ff88db;
 }
 
+.button--secondary {
+  padding: 0.25rem;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgb(255, 251, 232);
+  border: 1px solid rgb(129, 108, 1);
+  margin-right: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.button--secondary:hover {
+  background: #FEE772;
+}
+
 h1 {
   margin: 1.2rem 0 0.8rem;
 }
@@ -360,6 +374,10 @@ legend {
   font-size: 0.8rem;
 }
 
+.footer__header {
+  font-size: 1rem;
+}
+
 #chord {
   margin: auto;
   text-align: center;
@@ -369,9 +387,9 @@ legend {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  justify-content: center;
 }
 
 .presets .button {
   min-width: 100px;
-  /* margin-bottom: 0.5rem; */
 }

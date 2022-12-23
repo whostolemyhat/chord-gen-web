@@ -3,13 +3,9 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    James Baum - jamesbaum.co.uk - @whostolemyhat@mastodon.social
 
-# THANKS
+# TECHNOLOGY
 
-    <name>
-
-# TECHNOLOGY COLOPHON
-
-    CSS3, HTML5
-    Apache Server Configs, jQuery, Modernizr, Normalize.css
+    CSS3, HTML5, JS
+    Rust, Cairo, Actix, Nginx

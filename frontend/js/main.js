@@ -44,6 +44,11 @@ function showChordImage(path) {
   chord.innerHTML = "";
   let img = document.createElement("img");
   img.src = `${process.env.IMAGES_URL}/${path}.png`;
+  img.width = "320";
+  img.height = "388";
+  img.alt = `Guitar chord diagram for ${
+    document.querySelector("#title").value
+  }`;
   chord.appendChild(img);
 }
 
@@ -71,7 +76,6 @@ function createPresets(presets) {
     const presetsSection = document.querySelector(".presets");
     const btn = document.createElement("button");
     btn.classList.add("button");
-    // btn.id = preset.elementId;
     btn.textContent = preset.title;
     btn.addEventListener("click", () => applyPreset(preset));
     presetsSection.appendChild(btn);
@@ -133,6 +137,24 @@ const presets = [
     fingers: ["1", "3", "1", "2", "1", "1"],
     image: "13518970828834701382",
   },
+  {
+    title: "A7",
+    frets: ["x", "x", "9", "11", "10", "x"],
+    fingers: ["x", "x", "1", "3", "2", "x"],
+    image: "3854455750811480831",
+  },
+  {
+    title: "E9",
+    frets: ["x", "7", "6", "7", "7", "7"],
+    fingers: ["x", "2", "1", "3", "3", "3"],
+    image: "13724104169966017016",
+  },
+  {
+    title: "E♭m7",
+    frets: ["x", "6", "8", "6", "7", "6"],
+    fingers: ["x", "1", "3", "1", "2", "1"],
+    image: "3373453791652677623",
+  },
 ];
 
 const form = document.querySelector("#generate");
@@ -142,3 +164,18 @@ createPresets(presets);
 
 const buttons = document.querySelectorAll(".presets .button");
 buttons[Math.floor(Math.random() * buttons.length)].click();
+
+const symbols = ["♭", "♯", "♮", "°", "+"];
+const title = document.querySelector("#title");
+symbols.forEach((symbol) => {
+  const symbolSection = document.querySelector(".symbols");
+  const btn = document.createElement("button");
+  btn.classList.add("button--secondary");
+  btn.type = "button";
+  btn.textContent = symbol;
+  btn.addEventListener(
+    "click",
+    () => (title.value = `${title.value}${symbol}`)
+  );
+  symbolSection.appendChild(btn);
+});
