@@ -43,9 +43,9 @@ function showChordImage(path) {
   const chord = document.querySelector("#chord");
   chord.innerHTML = "";
   let img = document.createElement("img");
-  img.src = `${process.env.IMAGES_URL}/${path}.png`;
-  img.width = "320";
-  img.height = "388";
+  img.src = `${process.env.IMAGES_URL}/${path}.svg`;
+  // img.width = "320";
+  // img.height = "388";
   img.alt = `Guitar chord diagram for ${
     document.querySelector("#title").value
   }`;

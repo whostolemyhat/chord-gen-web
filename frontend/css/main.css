@@ -383,6 +383,10 @@ legend {
   text-align: center;
 }
 
+#chord img {
+  max-width: 450px;
+}
+
 .presets {
   display: flex;
   flex-wrap: wrap;
