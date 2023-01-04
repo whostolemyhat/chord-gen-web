@@ -289,7 +289,6 @@ a {
   font-weight: bold;
   text-decoration: underline;
   color:#bb0083;
-  /* color: #221; */
 }
 
 a:hover {
@@ -338,6 +337,24 @@ a:hover {
 
 .button--secondary:hover {
   background: #FEE772;
+}
+
+#controls {
+  text-align: right;
+}
+
+#controls .button {
+  margin: 1rem 0 0 0;
+  display: inline-block;
+}
+
+.button--download {
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.button--download:hover {
+  color: rgb(255, 251, 232);
 }
 
 h1 {

@@ -39,16 +39,47 @@ function handleSubmit(e) {
     .catch((e) => console.error("oh no", e));
 }
 
+// fix for retina screens - double height/width then change using css
+// to double px density
+const canvas = document.createElement("canvas");
+canvas.height = 930;
+canvas.width = 900;
+canvas.style.height = "465px";
+canvas.style.width = "450px";
+
 function showChordImage(path) {
   const chord = document.querySelector("#chord");
   chord.innerHTML = "";
   let img = document.createElement("img");
+  img.crossOrigin = "*";
+
+  img.onload = () => {
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0);
+    const imgURI = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(imgURI);
+    const downloadLink = document.createElement("a");
+    downloadLink.setAttribute(
+      "download",
+      `${document.querySelector("#title").value}.png`
+    );
+    downloadLink.setAttribute("href", imgURI);
+    downloadLink.setAttribute("target", "_blank");
+    downloadLink.classList.add("button", "button--download");
+    downloadLink.textContent = "\u21e3 Save";
+    const controls = document.querySelector("#controls");
+    controls.innerHTML = "";
+    controls.appendChild(downloadLink);
+  };
   img.src = `${process.env.IMAGES_URL}/${path}.svg`;
-  // img.width = "320";
-  // img.height = "388";
   img.alt = `Guitar chord diagram for ${
     document.querySelector("#title").value
   }`;
+
   chord.appendChild(img);
 }
 
