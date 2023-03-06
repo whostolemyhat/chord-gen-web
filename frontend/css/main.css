@@ -365,6 +365,24 @@ h1 {
   margin: 1rem 0;
 }
 
+.form__row p {
+  margin-bottom: 0;
+}
+
+.label__hand {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.hand {
+  font-weight: normal;
+}
+
+.hand__title {
+  font-weight: bold;
+  display: block;
+}
+
 @media (max-width: 500px) {
   .form__wrapper .label {
     width: 30%;

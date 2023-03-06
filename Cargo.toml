@@ -1,13 +1,13 @@
 [package]
 name = "chord-web"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 # chord-gen = { path = "../chord-gen" }
-chord-gen = { git = "https://github.com/whostolemyhat/chord-gen", tag = "v2.0.4" }
+chord-gen = { git = "https://github.com/whostolemyhat/chord-gen", tag = "v2.2.0" }
 actix-web = "4.2.1"
 env_logger = "0.10.0"
 log = "0.4.16"

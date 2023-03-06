@@ -23,6 +23,7 @@ function handleSubmit(e) {
   transformed.append("frets", frets);
   transformed.append("fingers", fingers);
   transformed.append("title", data.get("title") || "");
+  transformed.append("hand", data.get("hand") || "right");
 
   const headers = new Headers();
   headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -99,6 +100,8 @@ function applyPreset(preset) {
   document.querySelector("#fingers-b").value = preset.fingers[4];
   document.querySelector("#fingers-high-e").value = preset.fingers[5];
 
+  document.querySelector("[name='hand']").checked = preset.hand;
+
   showChordImage(preset.image);
 }
 
@@ -119,72 +122,84 @@ const presets = [
     frets: ["0", "2", "2", "1", "0", "0"],
     fingers: ["0", "2", "3", "1", "0", "0"],
     image: "18436534002643003894",
+    hand: "right",
   },
   {
     title: "D",
     frets: ["x", "x", "0", "2", "3", "2"],
     fingers: ["x", "x", "0", "2", "3", "1"],
     image: "4095730029079104823",
+    hand: "right",
   },
   {
     title: "A",
     frets: ["x", "0", "2", "2", "2", "0"],
     fingers: ["x", "0", "2", "1", "3", "0"],
     image: "6374786531096975228",
+    hand: "right",
   },
   {
     title: "G",
     frets: ["3", "2", "0", "0", "0", "3"],
     fingers: ["2", "1", "0", "0", "0", "3"],
     image: "8535511527932517360",
+    hand: "right",
   },
   {
     title: "C",
     frets: ["x", "3", "2", "0", "1", "0"],
     fingers: ["x", "3", "2", "0", "1", "0"],
     image: "452844100226506193",
+    hand: "right",
   },
   {
     title: "Hendrix",
     frets: ["x", "7", "6", "7", "8", "x"],
     fingers: ["x", "2", "1", "3", "4", "x"],
     image: "13217194300744275703",
+    hand: "right",
   },
   {
     title: "Bond",
     frets: ["0", "10", "9", "8", "7", "x"],
     fingers: ["0", "4", "3", "2", "1", "x"],
     image: "12540277254987366366",
+    hand: "right",
   },
   {
     title: "C°7",
     frets: ["x", "3", "4", "2", "3", "x"],
     fingers: ["x", "2", "3", "1", "4", "x"],
     image: "15615698213659243213",
+    hand: "right",
   },
   {
     title: "D7",
     frets: ["10", "12", "10", "11", "10", "10"],
     fingers: ["1", "3", "1", "2", "1", "1"],
     image: "13518970828834701382",
+    hand: "right",
   },
   {
     title: "A7",
     frets: ["x", "x", "9", "11", "10", "x"],
     fingers: ["x", "x", "1", "3", "2", "x"],
     image: "3854455750811480831",
+    hand: "right",
   },
   {
     title: "E9",
     frets: ["x", "7", "6", "7", "7", "7"],
     fingers: ["x", "2", "1", "3", "3", "3"],
     image: "13724104169966017016",
+    hand: "right",
   },
   {
     title: "E♭m7",
     frets: ["x", "6", "8", "6", "7", "6"],
     fingers: ["x", "1", "3", "1", "2", "1"],
     image: "3373453791652677623",
+    hand: "right",
   },
 ];
 

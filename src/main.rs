@@ -1,10 +1,10 @@
 use actix_cors::Cors;
-use actix_files;
+use actix_files::Files;
 use actix_web::{
     error, get, http, middleware::Logger, post, web::Form, App, HttpResponse, HttpServer,
     Responder, Result,
 };
-use chord_gen::{get_filename, render_svg, Chord};
+use chord_gen::{get_filename, render_svg, Chord, Hand};
 use log::info;
 use serde::{Deserialize, Serialize};
 use std::env;
@@ -20,6 +20,7 @@ struct ChordForm {
     title: String,
     fingers: String,
     frets: String,
+    hand: String,
 }
 
 #[derive(Serialize)]
@@ -38,11 +39,16 @@ async fn handle_form(payload: Form<ChordForm>) -> Result<impl Responder> {
         .collect();
 
     let fingers: Vec<&str> = payload.fingers.split(',').collect();
+    let hand = match payload.hand.as_str() {
+        "left" => Hand::Left,
+        _ => Hand::Right,
+    };
 
     let settings = Chord {
         frets,
         fingers,
         title: &payload.title,
+        hand,
     };
 
     let filename = get_filename(&settings);
@@ -92,7 +98,7 @@ async fn main() -> std::io::Result<()> {
             .service(ping)
             .service(home)
             .service(handle_form)
-            .service(actix_files::Files::new("/images", "./static/output"))
+            .service(Files::new("/images", "./static/output"))
     })
     .bind(format!("127.0.0.1:{:}", port))?
     .run()
