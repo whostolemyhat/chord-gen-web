@@ -376,11 +376,14 @@ h1 {
 
 .hand {
   font-weight: normal;
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .hand__title {
   font-weight: bold;
   display: block;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 500px) {
